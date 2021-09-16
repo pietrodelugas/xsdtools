@@ -303,7 +303,8 @@ class AbstractGenerator(ABC, metaclass=GeneratorMeta):
             xsd_type = obj.type
         else:
             return ''
-
+        import pdb
+        pdb.set_trace()
         try:
             return self.types_map[xsd_type.name]
         except KeyError:
@@ -546,8 +547,12 @@ class AbstractGenerator(ABC, metaclass=GeneratorMeta):
                     if xsd_type.is_derived(other, derivation):
                         return True
             else:
-                if xsd_type.is_derived(self.schema.types[type_name], derivation):
-                    return True
+                try:
+                    if xsd_type.is_derived(self.schema.types[type_name], derivation):
+                        return True
+                except KeyError:
+                    if xsd_type.is_derived(self.schema.imports.get(self.schema.namespaces['qes']).types[type_name],derivation):
+                        return True
 
         return False
 

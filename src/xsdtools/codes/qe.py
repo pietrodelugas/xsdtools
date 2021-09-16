@@ -41,7 +41,12 @@ class QEFortranGenerator(FortranGenerator):
             types_map = self.schema_types.copy().update(**types_map)
 
         super(QEFortranGenerator, self).__init__(schema, searchpath, filters, tests, types_map)
-        assert self.schema.target_namespace == QE_NAMESPACE
+        assert self.schema.namespaces.get('qes')  == QE_NAMESPACE
+        if self.schema.target_namespace != QE_NAMESPACE:
+           self.types_map = self.builtin_types.copy() 
+           ns_part = f"{{{QE_NAMESPACE}}}"
+           self.types_map.update((ns_part + k, v) for k, v in types_map.items()) 
+                
 
     @staticmethod
     @filter_method
