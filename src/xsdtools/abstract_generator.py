@@ -298,13 +298,11 @@ class AbstractGenerator(ABC, metaclass=GeneratorMeta):
         :return: an empty string for non-XSD objects.
         """
         if isinstance(obj, XsdType):
-            xsd_type = obj
+           xsd_type = obj
         elif isinstance(obj, (XsdAttribute, XsdElement)):
             xsd_type = obj.type
         else:
             return ''
-        import pdb
-        pdb.set_trace()
         try:
             return self.types_map[xsd_type.name]
         except KeyError:

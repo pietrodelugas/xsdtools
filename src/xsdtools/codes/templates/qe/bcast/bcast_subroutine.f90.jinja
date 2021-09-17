@@ -41,13 +41,13 @@
   {%- if element.min_occurs == 0 and element.max_occurs == 1 %}
     CALL mp_bcast(obj%{{ element|name }}_ispresent, ionode_id, comm)
     IF (obj%{{ element|name }}_ispresent) &
-    {%- if ( element.type|is_qes_type ) and element.type.is_complex() %}
+    {%- if ( element.type|is_schema_type ) and element.type.is_complex() %}
       CALL qes_bcast_{{ element|type_name }}(obj%{{ element|name }}, ionode_id, comm)
     {%- else %}
       CALL mp_bcast(obj%{{ element|name }}, ionode_id, comm)
     {%- endif %}
   {%- elif element.min_occurs == 1 and element.max_occurs==1 %}
-    {%- if ( element.type|is_qes_type ) and element.type.is_complex() %}
+    {%- if ( element.type|is_schema_type ) and element.type.is_complex() %}
     CALL qes_bcast_{{ element|type_name }}(obj%{{ element|name }}, ionode_id, comm)
     {%- else %}
     CALL mp_bcast(obj%{{ element|name }}, ionode_id, comm)
@@ -59,7 +59,7 @@
       CALL mp_bcast(obj%ndim_{{ element|name }}, ionode_id, comm)
       IF (.NOT.ionode) ALLOCATE(obj%{{ element|name }}(obj%ndim_{{ element|name }}))
       DO i=1, obj%ndim_{{ element|name }}
-      {%- if ( element.type|is_qes_type ) and element.type.is_complex() %}
+      {%- if ( element.type|is_schema_type ) and element.type.is_complex() %}
         CALL qes_bcast_{{ element|type_name }}(obj%{{ element|name }}(i), ionode_id, comm)
       {%- else %}
         CALL mp_bcast(obj%{{ element|name }}(i), ionode_id, comm)
@@ -70,7 +70,7 @@
     CALL mp_bcast(obj%ndim_{{ element|name }}, ionode_id, comm)
     IF (.NOT.ionode) ALLOCATE(obj%{{ element|name }}(obj%ndim_{{ element|name }}))
     DO i=1, obj%ndim_{{ element|name }}
-      {%- if ( element.type|is_qes_type ) and element.type.is_complex() %}
+      {%- if ( element.type|is_schema_type ) and element.type.is_complex() %}
       CALL qes_bcast_{{ element|type_name }}(obj%{{ element|name }}(i), ionode_id, comm)
       {%- else %}
       CALL mp_bcast(obj%{{ element|name }}(i), ionode_id, comm)

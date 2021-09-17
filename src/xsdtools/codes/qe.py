@@ -83,6 +83,12 @@ class QEFortranGenerator(FortranGenerator):
     @filter_method
     def is_qes_type(xsd_type):
         return xsd_type.target_namespace == QE_NAMESPACE
+    
+    @filter_method
+    def is_schema_type(self, xsd_type):
+      res = xsd_type.target_namespace == QE_NAMESPACE 
+      res = res or xsd_type.target_namespace == self.schema.target_namespace
+      return res
 
     @filter_method
     def is_matrix_type(self, xsd_type):

@@ -17,7 +17,7 @@
 {%- endif %}
 {%- if type.has_complex_content() %}
 {%- for element in type.content_type.iter_elements() %}
-  {%- if (element|is_qes_type) %}
+  {%- if (element|is_schema_type) %}
     {%- if element.type.is_simple() %}
     {{ element.type|init_fortran_type }},{{ element|optional }}{{ element|dimension }}INTENT(IN) :: {{ element|name }}
     {%- else %}

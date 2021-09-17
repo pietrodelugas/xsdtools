@@ -81,7 +81,7 @@
     IF (tmp_node_list_size>0) THEN
       obj%{{ element|name }}_ispresent = .TRUE.
       tmp_node => item(tmp_node_list, 0)
-  {%- if ( element.type|is_qes_type ) and element.type.is_complex() %}
+  {%- if ( element.type|is_schema_type ) and element.type.is_complex() %}
       CALL qes_read_{{ element|type_name }}(tmp_node, obj%{{ element|name }}, ierr )
   {%- else %}
       CALL extractDataContent(tmp_node, obj%{{ element|name }} , IOSTAT = iostat_)
@@ -100,7 +100,7 @@
 {%- elif element.min_occurs==1 and element.max_occurs==1 %}
     tmp_node => item(tmp_node_list, 0)
     IF (ASSOCIATED(tmp_node))&
-  {%- if ( element.type|is_qes_type ) and element.type.is_complex() %}
+  {%- if ( element.type|is_schema_type ) and element.type.is_complex() %}
        CALL qes_read_{{ element|type_name }}(tmp_node, obj%{{ element|name }}, ierr )
   {%- else %}
        CALL extractDataContent(tmp_node, obj%{{ element|name }}, IOSTAT = iostat_ )
@@ -125,7 +125,7 @@
     ALLOCATE(obj%{{ element|name }}(tmp_node_list_size))
     DO index=1,tmp_node_list_size
         tmp_node => item( tmp_node_list, index-1 )
-        {%- if ( element.type|is_qes_type ) and element.type.is_complex() %}
+        {%- if ( element.type|is_schema_type ) and element.type.is_complex() %}
         CALL qes_read_{{ element|type_name }}(tmp_node, obj%{{ element|name }}(index), ierr )
         {%- else %}
         CALL extractDataContent(tmp_node, obj%{{ element|name }}(index), IOSTAT = iostat_ )

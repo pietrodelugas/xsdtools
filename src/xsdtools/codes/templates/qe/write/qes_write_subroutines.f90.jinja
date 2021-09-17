@@ -36,7 +36,7 @@
    {%- if element.min_occurs == 0 %}
      IF (obj%{{ element|name }}_ispresent) THEN
       {%- if element.max_occurs == 1 %}
-         {%- if ( element.type|is_qes_type ) and element.type.is_complex() %}
+         {%- if ( element.type|is_schema_type ) and element.type.is_complex() %}
         CALL qes_write_{{ element|type_name }} (xp, obj%{{ element|name }})
          {%- else %}
         CALL xml_NewElement(xp, "{{ element|name }}")
@@ -51,7 +51,7 @@
          {%- endif %}
       {%- else %}
         DO i = 1, obj%ndim_{{ element|name }}
-         {%- if ( element.type|is_qes_type ) and element.type.is_complex() %}
+         {%- if ( element.type|is_schema_type ) and element.type.is_complex() %}
            CALL qes_write_{{ element|type_name }}(xp, obj%{{ element|name }}(i) )
          {%- else %}
            CALL xml_NewElement(xp, "{{ element|name }}")
@@ -68,7 +68,7 @@
       {%- endif %}
      END IF
    {%- elif element.max_occurs == 1 %}
-     {%- if ( element.type|is_qes_type ) and element.type.is_complex() %}
+     {%- if ( element.type|is_schema_type ) and element.type.is_complex() %}
      CALL qes_write_{{ element|type_name }} (xp, obj%{{ element|name }})
      {%- else %}
      CALL xml_NewElement(xp, '{{ element|name }}')
@@ -83,7 +83,7 @@
      {%- endif %}
    {%- else %}
      DO i = 1, obj%ndim_{{ element|name }}
-     {%- if ( element.type|is_qes_type ) and element.type.is_complex() %}
+     {%- if ( element.type|is_schema_type ) and element.type.is_complex() %}
         CALL qes_write_{{ element|type_name }}(xp, obj%{{ element|name }}(i) )
      {%- else %}
         CALL xml_NewElelement(xp, '{{ element|name }}')

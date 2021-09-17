@@ -15,7 +15,7 @@
 {%- if type.has_complex_content() %}
 {%- for element in type.content_type.iter_elements() %}
   {%- if element.min_occurs == 0 and element.max_occurs == 1 %}
-    {%- if ( element.type|is_qes_type ) and element.type.is_complex() %}
+    {%- if ( element.type|is_schema_type ) and element.type.is_complex() %}
     IF (obj%{{ element.local_name }}_ispresent) &
       CALL qes_reset_{{ element|type_name }}(obj%{{ element.local_name }})
     {%- endif %}
@@ -27,7 +27,7 @@
   {%- elif element.min_occurs == 0 %}
     IF (obj%{{ element.local_name }}_ispresent) THEN
       IF (ALLOCATED(obj%{{ element.local_name }})) THEN
-        {%- if ( element.type|is_qes_type ) and element.type.is_complex() %}
+        {%- if ( element.type|is_schema_type ) and element.type.is_complex() %}
         DO i=1, SIZE(obj%{{ element.local_name }})
           CALL qes_reset_{{ element|type_name }}(obj%{{element.local_name}}(i))
         ENDDO
@@ -39,7 +39,7 @@
     ENDIF
   {%- else %}
     IF (ALLOCATED(obj%{{ element.local_name }})) THEN
-      {%- if ( element.type|is_qes_type ) and element.type.is_complex() %}
+      {%- if ( element.type|is_schema_type ) and element.type.is_complex() %}
       DO i=1, SIZE(obj%{{ element.local_name }})
         CALL qes_reset_{{ element|type_name }}(obj%{{ element.local_name }}(i))
       ENDDO
