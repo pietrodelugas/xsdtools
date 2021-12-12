@@ -20,14 +20,14 @@ MODULE qes_read_module
   PUBLIC qes_read
   !
   INTERFACE qes_read
-  {%- for type in schema.complex_types %}
+  {%- for type in schema.complex_types|skip_types %}
     MODULE PROCEDURE qes_read_{{ type|type_name }}
   {%- endfor %}
   END INTERFACE qes_read
   !
   CONTAINS
   !
-  {%- for type in schema.complex_types %}
+  {%- for type in schema.complex_types|skip_types %}
 {% include "read/read_subroutine.f90.jinja" %}
   {%- endfor %}
   !

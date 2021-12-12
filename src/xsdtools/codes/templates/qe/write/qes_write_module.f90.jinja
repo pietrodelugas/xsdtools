@@ -19,14 +19,14 @@ MODULE qes_write_module
   PUBLIC
   !
   INTERFACE qes_write
-  {%- for type in schema.complex_types %}
+  {%- for type in schema.complex_types|skip_types %}
     MODULE PROCEDURE qes_write_{{ type|type_name }}
   {%- endfor %}
   END INTERFACE qes_write
   !
   CONTAINS
   !
-  {% for type in schema.complex_types %}
+  {% for type in schema.complex_types|skip_types %}
 {% include "write/qes_write_subroutines.f90.jinja" %}
   {%- endfor %}
   !

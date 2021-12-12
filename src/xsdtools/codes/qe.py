@@ -171,3 +171,9 @@ class QEFortranGenerator(FortranGenerator):
           remove+=['rank','dims']
       return (_ for _ in xsd_type.attributes.values() if not _.local_name in remove) 
         
+    @filter_method
+    def skip_types(self, xsd_types):
+      types_to_skip =  ['espressoType','cpstatusType','cpnumstepType','cptimestepsType','cpstepType',
+        'cp_ionPosType','cp_ionsNoseType','cp_elecNoseType', 'cp_cellType','cp_cellNoseType']
+      types_to_skip = filter(lambda t: self.schema.types.get(t,None), types_to_skip)
+      return [_ for _ in xsd_types if _ not in (self.schema.types[n] for n in types_to_skip) ]

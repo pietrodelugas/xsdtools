@@ -16,7 +16,7 @@ MODULE qes_types_module
   !
   IMPLICIT NONE
   !
-  {%- for type in ( schema.complex_types|sort_types ) %}
+  {%- for type in ( schema.complex_types|skip_types|sort_types ) %}
   TYPE :: {{ type|type_name('_type') }}
     !
     CHARACTER(len=100) :: tagname

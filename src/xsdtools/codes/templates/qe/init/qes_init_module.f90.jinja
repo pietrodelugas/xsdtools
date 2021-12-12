@@ -23,7 +23,7 @@ MODULE qes_init_module
   !
   INTERFACE qes_init
     !
-  {%- for type in schema.complex_types %}
+  {%- for type in schema.complex_types|skip_types %}
       {%- if type.local_name in ['matrixType', 'integerMatrixType'] %}
     MODULE PROCEDURE qes_init_{{ type|type_name }}_1
     MODULE PROCEDURE qes_init_{{ type|type_name }}_2
@@ -37,7 +37,7 @@ MODULE qes_init_module
   !
   CONTAINS
   !
-  {%- for type in schema.complex_types %}
+  {%- for type in schema.complex_types|skip_types %}
     {%- if type.local_name in ['matrixType', 'integerMatrixType'] %}
 {%include "init/init_matrix_subroutines.f90.jinja" %}
     {%- elif type is extension('matrixType', 'integerMatrixType') %}

@@ -21,14 +21,14 @@ MODULE qes_reset_module
   PUBLIC qes_reset
   !
   INTERFACE qes_reset
-  {%- for type in schema.complex_types %}
+  {%- for type in schema.complex_types | skip_types %}
     MODULE PROCEDURE qes_reset_{{ type|type_name }}
   {%- endfor %}
   END INTERFACE qes_reset
   !
   CONTAINS
   !
-  {%- for type in schema.complex_types %}
+  {%- for type in schema.complex_types|skip_types %}
 {% include "reset/reset_subroutines.f90.jinja" %}
   {%- endfor %}
   !

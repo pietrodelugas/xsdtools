@@ -20,14 +20,14 @@ MODULE qes_bcast_module
   PUBLIC qes_bcast
   !
   INTERFACE qes_bcast
-  {%- for type in schema.complex_types %}
+  {%- for type in schema.complex_types|skip_types %}
     MODULE PROCEDURE qes_bcast_{{ type|type_name }}
   {%- endfor %}
   END INTERFACE qes_bcast
   !
   CONTAINS
   !
-  {%- for type in schema.complex_types %}
+  {%- for type in schema.complex_types|skip_types %}
 {% include "bcast/bcast_subroutine.f90.jinja" %}
   {%- endfor %}
   !
